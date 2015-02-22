@@ -1,0 +1,28 @@
+---
+title: "PML assignment"
+output: html_document
+---
+In this assignment we are trying to build a model from 160 variables to 
+predict in what manner (A-E) an exercise was done. Unfortunately after 
+spending several days to get the caret package installed I did not have
+the time to troubleshoot the issues that arose when actually modeling.
+So I only submit what little I got:
+
+```{r}
+data<-read.csv("http://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv",
+               stringsAsFactors=F, na.strings=c(NA,"NA","#DIV/0!"))
+library(caret)
+library(randomForest)
+
+data<-data[,8:160]
+data$classe <- as.factor(data$classe)
+inTrain<-createDataPartition(y=data$classe,p=0.75,list=FALSE)
+training<-data[inTrain,]
+testing<-data[-inTrain,]
+## model <- randomForest(classe~.,data=training,ntree=100,na.action=na.roughfix)
+```
+
+Although classe is a factor variable I get an error that na.roughfix only
+works for factor variables - which classe is, and class does not even
+have any NA-s. So that's where I got stuck and if you know how to get around
+this please leave some hints as comments!
